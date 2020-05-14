@@ -2,13 +2,18 @@ package com.example.cardreader
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.ByteArrayOutputStream
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var base64Image: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,15 @@ class MainActivity : AppCompatActivity() {
                     //data.getData returns the content URI for the selected Image
                     val selectedImage: Uri? = data?.data
                     imageView.setImageURI(selectedImage)
+
+                    //Convert to Base64
+                    val bitmap = data!!.extras!!["data"] as Bitmap?
+
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    bitmap?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                    val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+
+                    base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT)
                 }
         }
     }
