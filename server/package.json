@@ -1,0 +1,23 @@
+{
+  "name": "dip-project-business-card-recognition",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andremsouza/dip-project-business-card-recognition.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andremsouza/dip-project-business-card-recognition/issues"
+  },
+  "homepage": "https://github.com/andremsouza/dip-project-business-card-recognition#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mime": "^2.4.5"
+  }
+}
