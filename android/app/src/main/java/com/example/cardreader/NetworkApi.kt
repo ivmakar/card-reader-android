@@ -2,15 +2,15 @@ package com.example.cardreader
 
 import com.example.cardreader.data.Request
 import com.example.cardreader.data.Response
-import io.reactivex.Single
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface NetworkApi {
     @POST("/scan")
-    suspend fun scanCard(@Body request: Request): Response
+    fun scanCard(@Body request: Request): Call<Response>
 
     @GET("/scan")
-    suspend fun getCard(): Response
+    fun getCard(): Call<Response>
 }

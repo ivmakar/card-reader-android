@@ -63,14 +63,14 @@ router.route('/')
         console.log(`data to send:`);
         var data = ""
         dataToSend.split('\n').forEach((value, index, array) => {data += "\"" + value + "\","} )
-        dataToSend = '{"image":[' + data.substring(0, data.length - 1) + ']}'
+        dataToSend = '{"text":[' + data.substring(0, data.length - 1) + ']}'
         console.log(dataToSend);
         // send data to browser
         res.send(dataToSend);
     });
 
 
-    // res.send('{"image":"Excelent!"}')
+    // res.send('{"text":"Excelent!"}')
 })
 
 app.use('/scan', router)

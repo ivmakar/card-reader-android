@@ -1,21 +1,42 @@
 package com.example.cardreader
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
+import android.net.Uri
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.example.cardreader.data.Response
-import kotlinx.coroutines.*
-import org.koin.dsl.module
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
-val viewModelModule = module {
-    factory { MainViewModel(get()) }
-}
+const val API_URL = "http://192.168.1.100:3000/"
 
 const val TAG = "TAG"
 
-class MainViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    suspend fun scanCard(value: String): Response = dataRepository.scanCard(value)
+    val retrofit = Retrofit
+        .Builder()
+        .baseUrl(API_URL)
+        .client(
+            OkHttpClient()
+            .newBuilder()
+            .readTimeout(180, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor())
+            .build()
+        )
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    suspend fun get(): Response = dataRepository.get()
+    val networkApi = retrofit.create(NetworkApi::class.java)
+
+    val imageUri = ObservableField<Uri?>()
+
+    val text = ObservableField("")
+    var splitedText = ArrayList<String>()
+    val phone = ObservableField("")
+    val email = ObservableField("")
+    val site = ObservableField("")
+
 }
