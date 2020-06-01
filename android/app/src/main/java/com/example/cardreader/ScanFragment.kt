@@ -8,12 +8,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.cardreader.data.Request
 import com.example.cardreader.data.Response
@@ -76,6 +76,38 @@ class ScanFragment : Fragment() {
                 }
             })
         }
+
+        binding.email.setOnClickListener {
+            if (viewModel.email.get().isNullOrEmpty()) {
+                return@setOnClickListener
+            }
+            val emailIntent = Intent(
+                Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", viewModel.email.get(), null
+                )
+            )
+            startActivity(Intent.createChooser(emailIntent, "Send email..."))
+        }
+
+        binding.phone.setOnClickListener {
+            if (viewModel.phone.get().isNullOrEmpty()) {
+                return@setOnClickListener
+            }
+            val intent =
+                Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + viewModel.phone.get()))
+            startActivity(intent)
+        }
+
+        binding.site.setOnClickListener {
+            if (viewModel.site.get().isNullOrEmpty()) {
+                return@setOnClickListener
+            }
+            val url = viewModel.site.get()
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
+        }
+
         return binding.root
     }
 

@@ -52,13 +52,6 @@
                     android:layout_height="wrap_content"
                     android:text="Сканировать визитку" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.text}"
-                    android:gravity="center"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
